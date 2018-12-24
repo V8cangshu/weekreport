@@ -1,3 +1,63 @@
     跟着bilibili上的av16869217视频逐步了解c语言链表的基础知识和功能，随后逐步实践c语言链表基本功能，逐一完成增（头插和尾插）删改查，并使用DevC++建立管
 理系统底层预期逐步完善其功能。学习的过程中亦复习了之前学习的结构体，完成了相应的c语言题目。其余学习时间还用于跟进大学高数课程，学习练习弧长长度的计算和旋
 转体体积计算，并完成练习册相应练习题；完成大学英语课程教学需求（U校园）的阅读和听力网上教学课程，完成四级听力模拟练习题。
+PS：链表学习中的部分代码
+int N;
+从头插入
+void addnode1(STU* p)//从末尾增加节点 
+{
+	int i;
+	STU *pnew=NULL;//新节点 
+	scanf("%d",&N);
+	for(i=0;i<N;i++)
+	{
+	pnew=(STU*)malloc(sizeof(STU));//为新节点开辟一块内存 
+	scanf("%s",pnew->num);
+	scanf("%s",pnew->name);
+	scanf("%s",pnew->sex);
+	scanf("%d",&pnew->age);
+	
+	pnew->pnext=NULL;//最后一个置空
+	p->pnext=pnew;//链接
+	p=p->pnext;//让p移动到下一个的开头
+	}
+}
+从尾插入
+void addnode2(STU* p)//从开头增加节点 
+{
+	int i;
+	STU *pnew=NULL;
+	scanf("%d",&N);
+	for(i=0;i<N;i++)
+	{
+		pnew=(STU*)malloc(sizeof(STU));
+		scanf("%s",pnew->num);
+		scanf("%s",pnew->name);
+		scanf("%s",pnew->sex);
+		scanf("%d",&pnew->age);
+		
+		pnew->pnext=p->pnext;//新加入的尾地址指向”后一个“的头地址 
+		p->pnext=pnew;//空的尾地址指向新加入的头地址 
+	}
+}
+删除功能代码（子函数）
+void deletenode(STU* p)
+{
+	int i;
+	STU* ptemp=p;//给当前位置留下标记
+	char numkey[10];
+	scanf("%s",&numkey);
+	p=p->pnext;//向后移动搜寻
+	for (i=0;i<N;i++)
+	//while(p!=NULL)死循环
+	{
+		if(!strcmp(p->num,numkey))
+		{
+			ptemp->pnext=p->pnext;
+			free(p);
+			break;
+		}
+		p=p->pnext;
+		ptemp=ptemp->pnext;
+	}
+}
